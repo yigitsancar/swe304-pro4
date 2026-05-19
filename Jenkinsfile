@@ -3,6 +3,13 @@ pipeline {
 
     stages {
 
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/yigitsancar/swe304-pro4.git'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'chmod +x gradlew'
@@ -36,6 +43,6 @@ pipeline {
                 sh 'kubectl get services'
             }
         }
-
     }
 }
+

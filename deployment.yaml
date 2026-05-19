@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
       - name: swe304-pro4-container
-        image: swe304-pro4:latest
-        imagePullPolicy: Never
+        image: yigitsancar/swe304-pro4:latest
+        imagePullPolicy: Always
 
         ports:
         - containerPort: 8080

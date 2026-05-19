@@ -3,13 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Check') {
-            steps {
-                sh 'pwd'
-                sh 'ls'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'chmod +x gradlew'
@@ -19,13 +12,28 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t swe304-pro4:latest .'
+                sh 'docker build -t yigitsancar/swe304-pro4:latest .'
             }
         }
 
-        stage('Docker Images') {
+        stage('Docker Push') {
             steps {
-                sh 'docker images'
+                sh 'docker push yigitsancar/swe304-pro4:latest'
+            }
+        }
+
+        stage('Kubernetes Deploy') {
+            steps {
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
+                sh 'kubectl rollout restart deployment swe304-pro4-deployment'
+            }
+        }
+
+        stage('Kubernetes Status') {
+            steps {
+                sh 'kubectl get pods'
+                sh 'kubectl get services'
             }
         }
 

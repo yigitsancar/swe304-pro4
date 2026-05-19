@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: swe304-pro4-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: swe304-pro4
+
+  template:
+    metadata:
+      labels:
+        app: swe304-pro4
+
+    spec:
+      containers:
+      - name: swe304-pro4-container
+        image: swe304-pro4:latest
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 8080

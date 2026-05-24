@@ -31,10 +31,14 @@ pipeline {
 
         stage('Kubernetes Deploy') {
             steps {
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl apply -f service.yaml'
-                sh 'kubectl rollout restart deployment swe304-pro4-deployment'
-            }
+             sh 'cp -r /home/yigit/.kube /var/lib/jenkins/'
+             sh 'cp -r /home/yigit/.minikube /var/lib/jenkins/'
+             sh 'sed -i "s|/home/yigit/.minikube|/var/lib/jenkins/.minikube|g" /var/lib/jenkins/.kube/config'
+
+             sh 'kubectl apply -f deployment.yaml'
+             sh 'kubectl apply -f service.yaml'
+             sh 'kubectl rollout restart deployment swe304-pro4-deployment'
+             }
         }
 
         stage('Kubernetes Status') {
